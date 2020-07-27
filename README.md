@@ -25,5 +25,5 @@ We provide precalculated representations for all conducted experiment splits:
 
 Training for the NTU 120 one-shot action recognition experiments can be executed like:
 
-`python metric_classification.py dataset=ntu_swap_axis -m`
+`python train.py dataset=ntu_swap_axis -m`
 
