@@ -2,12 +2,16 @@
 
 ![SL-DML Overview](images/example.png)
 
-This repository contains the code for SL-SML, a metric learning approach for one-shot action recognition supporting multiple modalities.
+This repository contains the code for SL-DML, a metric learning approach for one-shot action recognition supporting multiple modalities.
+
+## Video Abstract
+
+[Video](https://userpages.uni-koblenz.de/~raphael/videos/sl-dml.mp4)
 
 ## Requirements
 
 * `pip install -r requirements.txt`
-*  We made intensive use of the great [pytorch-metric-learning](https://github.com/KevinMusgrave/pytorch-metric-learning)` library
+*  SL-DML is based on the [pytorch-metric-learning](https://github.com/KevinMusgrave/pytorch-metric-learning) library
 
 ## Precalculated Representations
 
