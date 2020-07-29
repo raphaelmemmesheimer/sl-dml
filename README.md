@@ -20,7 +20,6 @@ This repository contains the code for SL-DML, a metric learning approach for one
   journal={arXiv preprint arXiv:2004.11085},
   year={2020}
 }
-
 ```
 
 ## Requirements
