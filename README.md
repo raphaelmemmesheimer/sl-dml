@@ -2,7 +2,7 @@
 
 ![SL-DML Overview](images/example.png)
 
-This repository contains the code for SL-DML, a metric learning approach for one-shot action recognition supporting multiple modalities.
+This repository contains the code for SL-DML, a metric learning approach for one-shot action recognition supporting multiple modalities. A pre-print can be found on [arxiv](https://arxiv.org/pdf/2004.11085.pdf).
 
 ## Video Abstract
 
