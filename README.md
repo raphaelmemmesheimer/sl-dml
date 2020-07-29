@@ -1,4 +1,4 @@
-# SL-DML: Signal level deep metric learning for multimodal action recognition
+# SL-DML: Signal Level Deep Metric Learning for MultimodalOne-Shot Action Recognition
 
 ![SL-DML Overview](images/example.png)
 
