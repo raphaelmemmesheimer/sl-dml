@@ -11,6 +11,18 @@ This repository contains the code for SL-DML, a metric learning approach for one
 
 [Video](https://userpages.uni-koblenz.de/~raphael/videos/sl-dml.mp4)
 
+## Citation
+
+```
+@article{memmesheimer2020signal,
+  title={Signal Level Deep Metric Learning for Multimodal One-Shot Action Recognition},
+  author={Memmesheimer, Raphael and Theisen, Nick and Paulus, Dietrich},
+  journal={arXiv preprint arXiv:2004.11085},
+  year={2020}
+}
+
+```
+
 ## Requirements
 
 * `pip install -r requirements.txt`
