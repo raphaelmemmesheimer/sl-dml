@@ -31,7 +31,7 @@ This repository contains the code for SL-DML, a metric learning approach for one
 
 We provide precalculated representations for all conducted experiment splits:
 
-* [NTU RGB+D 120 One-Shot-TODO](https://agas.uni-koblenz.de/datasets/sl-dml/ntu120_one_shot.zip)
+* [NTU RGB+D 120 One-Shot](https://agas.uni-koblenz.de/datasets/sl-dml/ntu_120_one_shot.zip)
 * [UTD-MHAD](https://agas.uni-koblenz.de/datasets/sl-dml/utdmhad_one_shot.zip)
 * [Simitate](https://agas.uni-koblenz.de/datasets/sl-dml/simitate_one_shot.zip) 
 
