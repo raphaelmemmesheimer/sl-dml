@@ -1,4 +1,4 @@
-# SL-DML: Signal Level Deep Metric Learning for MultimodalOne-Shot Action Recognition
+# SL-DML: Signal Level Deep Metric Learning for Multimodal One-Shot Action Recognition
 
 ![SL-DML Overview](images/example.png)
 
@@ -37,7 +37,7 @@ We provide precalculated representations for all conducted experiment splits:
 
 ## Training
 
-Download the representations from aboce i.e. 
+Download the representations from above:
 
 `wget https://agas.uni-koblenz.de/datasets/sl-dml/ntu120_one_shot.zip`
 
