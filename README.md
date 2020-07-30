@@ -39,13 +39,13 @@ We provide precalculated representations for all conducted experiment splits:
 
 Download the representations from above:
 
-`wget https://agas.uni-koblenz.de/datasets/sl-dml/ntu120_one_shot.zip`
+`wget https://agas.uni-koblenz.de/datasets/sl-dml/ntu_120_one_shot.zip`
 
 Then extract the files into a folder that the environment variable `$DATASET_FOLDER` points to.
 
 ```
 export DATASET_FOLDER=~/datasets/
-unzip ntu120_one_shot.zip -d $DATASET_FOLDER
+unzip ntu_120_one_shot.zip -d $DATASET_FOLDER
 ```
 
 Training for the NTU 120 one-shot action recognition experiments can be executed like:
