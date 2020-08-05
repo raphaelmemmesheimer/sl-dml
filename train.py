@@ -1,12 +1,12 @@
 # The testing module requires faiss
 # So if you don't have that, then this import will break
 from pytorch_metric_learning import losses, miners, samplers, trainers, testers, utils
+import torch.nn as nn
 import record_keeper
 import pytorch_metric_learning.utils.logging_presets as logging_presets
 from torchvision import datasets, models, transforms
 import torchvision
 import logging
-from utils_for_examples import MLP, Identity
 logging.getLogger().setLevel(logging.INFO)
 import os
 
@@ -88,6 +88,39 @@ class OneShotTester(BaseTester):
         accuracies["accuracy"] = accuracy
         keyname = self.accuracies_keyname("mean_average_precision_at_r") # WTF? accuracy as keyname not working
         accuracies[keyname] = accuracy
+
+
+class MLP(nn.Module):
+    # layer_sizes[0] is the dimension of the input
+    # layer_sizes[-1] is the dimension of the output
+    def __init__(self, layer_sizes, final_relu=False):
+        super().__init__()
+        layer_list = []
+        layer_sizes = [int(x) for x in layer_sizes]
+        num_layers = len(layer_sizes) - 1
+        final_relu_layer = num_layers if final_relu else num_layers - 1
+        for i in range(len(layer_sizes) - 1):
+            input_size = layer_sizes[i]
+            curr_size = layer_sizes[i + 1]
+            if i < final_relu_layer:
+                layer_list.append(nn.ReLU(inplace=True))
+            layer_list.append(nn.Linear(input_size, curr_size))
+        self.net = nn.Sequential(*layer_list)
+        self.last_linear = self.net[-1]
+
+    def forward(self, x):
+        return self.net(x)
+
+
+# This is for replacing the last layer of a pretrained network.
+# This code is from https://github.com/KevinMusgrave/powerful_benchmarker
+class Identity(nn.Module):
+
+    def __init__(self):
+        super().__init__()
+
+    def forward(self, x):
+        return x
 
 
 def get_datasets(data_dir, cfg, mode="train"):
@@ -218,7 +251,7 @@ def train_app(cfg):
 
     if cfg.miner.name == "triplet_margin":
         #miner = miners.TripletMarginMiner(margin=0.2)
-        miner = miners.MultiSimilarityMiner(margin=cfg.miner.margin)
+        miner = miners.TripletMarginMiner(margin=cfg.miner.margin)
     if cfg.miner.name == "multi_similarity":
         miner = miners.MultiSimilarityMiner(epsilon=cfg.miner.epsilon)
         #miner = miners.MultiSimilarityMiner(epsilon=0.05)
@@ -273,7 +306,7 @@ def train_app(cfg):
             )
     #tester.embedding_filename=data_dir+"/embeddings_pretrained_triplet_loss_multi_similarity_miner.pkl"
     tester.embedding_filename=data_dir+"/"+experiment_name+".pkl"
-    #end_of_epoch_hook = hooks.end_of_epoch_hook(tester, dataset_dict, model_folder)
+    end_of_epoch_hook = hooks.end_of_epoch_hook(tester, dataset_dict, model_folder)
     trainer = trainers.TrainWithClassifier(models,
             optimizers,
             batch_size,
