@@ -76,17 +76,11 @@ class OneShotTester(BaseTester):
 
         accuracy = accuracy_score(knn_labels, query_labels)
         print(accuracy)
-        if accuracy > self.max_accuracy:
-            self.max_accuracy = accuracy
-            with open(self.embedding_filename, 'wb') as f:
-                print("Dumping embeddings for new max_acc to file", self.embedding_filename)
-                pickle.dump([query_embeddings, query_labels, reference_embeddings, reference_labels, self.max_accuracy], f)
-
         with open(self.embedding_filename+"_last", 'wb') as f:
             print("Dumping embeddings for new max_acc to file", self.embedding_filename+"_last")
             pickle.dump([query_embeddings, query_labels, reference_embeddings, reference_labels, accuracy], f)
         accuracies["accuracy"] = accuracy
-        keyname = self.accuracies_keyname("mean_average_precision_at_r") # WTF? accuracy as keyname not working
+        keyname = self.accuracies_keyname("mean_average_precision_at_r") # accuracy as keyname not working
         accuracies[keyname] = accuracy
 
 
