@@ -65,6 +65,8 @@ Training for the NTU 120 one-shot action recognition experiments can be executed
 
 `python train.py dataset=ntu_swap_axis`
 
+During development we considered the classes `A002, A008, A014, A020, A026, A032, A038, A044, A050, A056, A062, A068, A074, A080, A086, A092, A098, A104, A110,  A116` as validation classes.
+
 ### Simitate One-Shot
 
 dataset options for the Simitate experiments are:
