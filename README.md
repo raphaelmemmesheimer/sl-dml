@@ -57,19 +57,34 @@ python train.py dataset=ntu_swap_axis
 
 ## Training
 
-Download the representations from above:
-
-`wget https://agas.uni-koblenz.de/datasets/sl-dml/ntu_120_one_shot.zip`
-
-Then extract the files into a folder that the environment variable `$DATASET_FOLDER` points to.
-
-```
-export DATASET_FOLDER=~/datasets/
-unzip ntu_120_one_shot.zip -d $DATASET_FOLDER
-```
-
 Training for the NTU 120 one-shot action recognition experiments can be executed like:
 
+### NTU 120 One-Shot
+
 `python train.py dataset=ntu_swap_axis`
+
+### Simitate One-Shot
+
+dataset options for the Simitate experiments are:
+
+* `simitate_aux_010_val_004`
+* `simitate_aux_010_val_016`
+* `simitate_aux_014_val_004`
+* `simitate_aux_014_val_012`
+* `simitate_aux_018_val_004`
+* `simitate_aux_018_val_008`
+* `simitate_aux_022_val_004`
+
+```
+wget https://agas.uni-koblenz.de/datasets/sl-dml/simitate_one_shot.zip
+mkdir -p data/simitate/
+unzip simitate_one_shot.zip -d $DATASET_FOLDER/simitate/
+
+python train.py dataset=simitate_aux_010_val_004
+```
+
+You can run all experiments on the Simitate dataset as:
+
+`python train.py dataset=simitate_aux_010_val_004,simitate_aux_010_val_016,simitate_aux_014_val_004,simitate_aux_014_val_012,simitate_aux_018_val_004,simitate_aux_018_val_008,simitate_aux_022_val_004 -m`
 
 Note, this also requires the environment variable `$DATASET_FOLDER` to be existing and the respective dataset to be extracted there.
