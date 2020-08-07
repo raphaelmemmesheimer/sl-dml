@@ -35,6 +35,26 @@ We provide precalculated representations for all conducted experiment splits:
 * [UTD-MHAD](https://agas.uni-koblenz.de/datasets/sl-dml/utdmhad_one_shot.zip)
 * [Simitate](https://agas.uni-koblenz.de/datasets/sl-dml/simitate_one_shot.zip) 
 
+## Quick Start
+
+
+```
+git clone https://github.com/raphaelmemmesheimer/sl-dml
+cd sl-dml
+pip install -r requirements.txt
+export DATASET_FOLDER="$(pwd)/data"
+mkdir -p data/ntu/
+wget https://agas.uni-koblenz.de/datasets/sl-dml/ntu_120_one_shot.zip
+unzip ntu_120_one_shot.zip -d $DATASET_FOLDER/ntu/ntu_swap_axes_testswapaxes
+python train.py dataset=ntu_swap_axis
+```
+when returning you have to set the dataset folder again:
+
+```
+export DATASET_FOLDER="$(pwd)/data"
+python train.py dataset=ntu_swap_axis
+```
+
 ## Training
 
 Download the representations from above:
@@ -50,6 +70,6 @@ unzip ntu_120_one_shot.zip -d $DATASET_FOLDER
 
 Training for the NTU 120 one-shot action recognition experiments can be executed like:
 
-`python train.py dataset=ntu_swap_axis -m`
+`python train.py dataset=ntu_swap_axis`
 
-Note, this also requires the environment variable `$DATASET_FOLDER` to be existing and the respecitve dataset to be extracted there.
+Note, this also requires the environment variable `$DATASET_FOLDER` to be existing and the respective dataset to be extracted there.
