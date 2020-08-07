@@ -71,14 +71,6 @@ During development, we suggest using the classes `A002, A008, A014, A020, A026, 
 
 dataset options for the Simitate experiments are:
 
-* `simitate_aux_010_val_004`
-* `simitate_aux_010_val_016`
-* `simitate_aux_014_val_004`
-* `simitate_aux_014_val_012`
-* `simitate_aux_018_val_004`
-* `simitate_aux_018_val_008`
-* `simitate_aux_022_val_004`
-
 ```
 wget https://agas.uni-koblenz.de/datasets/sl-dml/simitate_one_shot.zip
 mkdir -p data/simitate/
