@@ -59,9 +59,9 @@ python train.py dataset=ntu_swap_axis
 
 Note, the following commands require an environment variable `$DATASET_FOLDER` to be existing.
 
-Training for the NTU 120 one-shot action recognition experiments can be executed like:
-
 ### NTU 120 One-Shot
+
+Training for the NTU 120 one-shot action recognition experiments can be executed like:
 
 `python train.py dataset=ntu_swap_axis`
 
