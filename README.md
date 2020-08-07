@@ -81,7 +81,10 @@ dataset options for the Simitate experiments are:
 wget https://agas.uni-koblenz.de/datasets/sl-dml/simitate_one_shot.zip
 mkdir -p data/simitate/
 unzip simitate_one_shot.zip -d $DATASET_FOLDER/simitate/
+```
 
+to train then:
+```
 python train.py dataset=simitate_aux_010_val_004
 ```
 
