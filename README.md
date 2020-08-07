@@ -69,8 +69,6 @@ During development, we suggest using the classes `A002, A008, A014, A020, A026, 
 
 ### Simitate One-Shot
 
-dataset options for the Simitate experiments are:
-
 ```
 wget https://agas.uni-koblenz.de/datasets/sl-dml/simitate_one_shot.zip
 mkdir -p data/simitate/
