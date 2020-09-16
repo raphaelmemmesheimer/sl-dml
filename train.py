@@ -256,7 +256,7 @@ def train_app(cfg):
 
     batch_size = cfg.trainer.batch_size
     num_epochs = cfg.trainer.num_epochs
-    iterations_per_epoch = cfg.trainer.iterations_per_epoch #int(len(train_dataset) / batch_size) # 2000 for ntu 120 one shot 49.5 accuracy
+    iterations_per_epoch = cfg.trainer.iterations_per_epoch
     # Set the dataloader sampler
     sampler = samplers.MPerClassSampler(train_dataset.targets, m=4, length_before_new_iter=len(train_dataset))
     
