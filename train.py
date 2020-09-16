@@ -250,11 +250,16 @@ def train_app(cfg):
         miner = miners.MultiSimilarityMiner(epsilon=cfg.miner.epsilon)
         #miner = miners.MultiSimilarityMiner(epsilon=0.05)
 
+    #loss = losses.CrossBatchMemory(loss, cfg.embedder.size, memory_size=1024, miner=miner) 
+    #extra_str = "cb_mem"
+    extra_str = ""
+
     batch_size = cfg.trainer.batch_size
     num_epochs = cfg.trainer.num_epochs
     iterations_per_epoch = cfg.trainer.iterations_per_epoch #int(len(train_dataset) / batch_size) # 2000 for ntu 120 one shot 49.5 accuracy
     # Set the dataloader sampler
     sampler = samplers.MPerClassSampler(train_dataset.targets, m=4, length_before_new_iter=len(train_dataset))
+    
 
 
     # Package the above stuff into dictionaries.
@@ -274,7 +279,7 @@ def train_app(cfg):
             "trunk_scheduler_by_epoch": torch.optim.lr_scheduler.StepLR(embedder_optimizer, cfg.scheduler.step_size, gamma=cfg.scheduler.gamma),
             }
 
-    experiment_name = "%s_model_%s_cl_%s_ml_%s_miner_%s_mix_ml_%02.2f_mix_cl_%02.2f_resize_%d_emb_size_%d_class_size_%d_opt_%s_lr_%02.2f_m_%02.2f_wd_%02.2f"%(cfg.dataset.name,
+    experiment_name = "%s_model_%s_cl_%s_ml_%s_miner_%s_mix_ml_%02.2f_mix_cl_%02.2f_resize_%d_emb_size_%d_class_size_%d_opt_%s_lr_%02.2f_%s"%(cfg.dataset.name,
                                                                                                   cfg.model.model_name, 
                                                                                                   "cross_entropy", 
                                                                                                   cfg.embedder_loss.name, 
@@ -286,8 +291,10 @@ def train_app(cfg):
                                                                                                   cfg.embedder.class_out_size,
                                                                                                   cfg.optimizer.name,
                                                                                                   cfg.optimizer.lr,
-                                                                                                  cfg.optimizer.momentum,
-                                                                                                  cfg.optimizer.weight_decay)
+                                                                                                  extra_str
+                                                                                                  #cfg.optimizer.momentum,
+                                                                                                  #cfg.optimizer.weight_decay
+                                                                                                  )
     record_keeper, _, _ = logging_presets.get_record_keeper("logs/%s"%(experiment_name), "tensorboard/%s"%(experiment_name))
     hooks = logging_presets.get_hook_container(record_keeper)
     dataset_dict = {"samples": val_samples_dataset, "val": val_dataset}
