@@ -7,7 +7,7 @@ This repository contains the code for SL-DML, a metric learning approach for one
 ## Video Abstract
 
 
-[![SL-DML Overview](images/sl-dml_video_preview.png)](https://userpages.uni-koblenz.de/~raphael/videos/sl-dml.mp4)
+[![SL-DML Video](images/sl-dml_video_preview.png)](https://youtu.be/Wdy_YPPiYgc)
 
 [Video](https://userpages.uni-koblenz.de/~raphael/videos/sl-dml.mp4)
 
