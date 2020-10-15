@@ -34,6 +34,7 @@ torch.backends.cudnn.benchmark = False
 
 def get_experiment_name(cfg, extra_str):
     augmentation_text = "rotation_"+str(cfg.transform.transform_random_rotation_degrees) if cfg.transform.transform_random_rotation else ""
+    extra_str+=augmentation_text
     experiment_name = "%s_model_%s_cl_%s_ml_%s_miner_%s_mix_ml_%02.2f_mix_cl_%02.2f_resize_%d_emb_size_%d_class_size_%d_opt_%s_lr_%02.2f_%s"%(cfg.dataset.name,
                                                                                                   cfg.model.model_name, 
                                                                                                   "cross_entropy", 
