@@ -32,6 +32,27 @@ torch.manual_seed(42)
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
+def get_experiment_name(cfg, extra_str):
+    augmentation_text = "rotation_"+str(cfg.transform.transform_random_rotation_degrees) if cfg.transform.transform_random_rotation else ""
+    experiment_name = "%s_model_%s_cl_%s_ml_%s_miner_%s_mix_ml_%02.2f_mix_cl_%02.2f_resize_%d_emb_size_%d_class_size_%d_opt_%s_lr_%02.2f_%s"%(cfg.dataset.name,
+                                                                                                  cfg.model.model_name, 
+                                                                                                  "cross_entropy", 
+                                                                                                  cfg.embedder_loss.name, 
+                                                                                                  cfg.miner.name, 
+                                                                                                  cfg.loss.metric_loss, 
+                                                                                                  cfg.loss.classifier_loss,
+                                                                                                  cfg.transform.transform_resize,
+                                                                                                  cfg.embedder.size,
+                                                                                                  cfg.embedder.class_out_size,
+                                                                                                  cfg.optimizer.name,
+                                                                                                  cfg.optimizer.lr,
+                                                                                                  extra_str
+                                                                                                  #cfg.optimizer.momentum,
+                                                                                                  #cfg.optimizer.weight_decay
+                                                                                                  )
+    return experiment_name
+
+
 class OneShotTester(BaseTester):
 
     def __init__(self, end_of_testing_hook=None):
@@ -83,6 +104,14 @@ class OneShotTester(BaseTester):
         keyname = self.accuracies_keyname("mean_average_precision_at_r") # accuracy as keyname not working
         accuracies[keyname] = accuracy
 
+        # log config
+
+        experiment_name = get_experiment_name(cfg, extra_str="")
+        with open("config_log.txt", "w") as config_log:
+            config_log.write(experiment_name)
+            config_log.write("acccuracy " +str(accuracy))
+            config_log.write(cfg.pretty())
+
 
 class MLP(nn.Module):
     # layer_sizes[0] is the dimension of the input
@@ -124,6 +153,8 @@ def get_datasets(data_dir, cfg, mode="train"):
     test_transforms = []
     #if cfg.transform.transform_resize_match:
     common_transforms.append(transforms.Resize((cfg.transform.transform_resize,cfg.transform.transform_resize)))
+    #else:
+    #    common_transforms.append(transforms.Resize(cfg.transform.transform_resize))
     
     if cfg.transform.transform_random_resized_crop:
         train_transforms.append(transforms.RandomResizedCrop(cfg.transform.transform_resize))
@@ -237,7 +268,10 @@ def train_app(cfg):
         loss = losses.TripletMarginLoss(margin=cfg.embedder_loss.margin)
     if cfg.embedder_loss.name == "multi_similarity":
         loss = losses.MultiSimilarityLoss(alpha=cfg.embedder_loss.alpha, beta=cfg.embedder_loss.beta, base=cfg.embedder_loss.base)
-
+    if cfg.embedder_loss.name == "proxy_anchor":
+        loss = losses.ProxyAnchorLoss(num_classes=100, embedding_size=cfg.embedder.size, margin=cfg.embedder_loss.margin, alpha=cfg.embedder_loss.alpha)
+        #loss = losses.ProxyAnchorLoss(num_classes=cfg.embedder.class_out_size, embedding_size=cfg.embedder.size, margin=cfg.embedder_loss.margin, alpha=cfg.embedder_loss.alpha)
+        loss = loss.to(device)
     # Set the classification loss:
     classification_loss = torch.nn.CrossEntropyLoss()
 
@@ -279,26 +313,15 @@ def train_app(cfg):
             "trunk_scheduler_by_epoch": torch.optim.lr_scheduler.StepLR(embedder_optimizer, cfg.scheduler.step_size, gamma=cfg.scheduler.gamma),
             }
 
-    experiment_name = "%s_model_%s_cl_%s_ml_%s_miner_%s_mix_ml_%02.2f_mix_cl_%02.2f_resize_%d_emb_size_%d_class_size_%d_opt_%s_lr_%02.2f_%s"%(cfg.dataset.name,
-                                                                                                  cfg.model.model_name, 
-                                                                                                  "cross_entropy", 
-                                                                                                  cfg.embedder_loss.name, 
-                                                                                                  cfg.miner.name, 
-                                                                                                  cfg.loss.metric_loss, 
-                                                                                                  cfg.loss.classifier_loss,
-                                                                                                  cfg.transform.transform_resize,
-                                                                                                  cfg.embedder.size,
-                                                                                                  cfg.embedder.class_out_size,
-                                                                                                  cfg.optimizer.name,
-                                                                                                  cfg.optimizer.lr,
-                                                                                                  extra_str
-                                                                                                  #cfg.optimizer.momentum,
-                                                                                                  #cfg.optimizer.weight_decay
-                                                                                                  )
+
+    experiment_name = get_experiment_name(cfg, extra_str)
+    print(experiment_name)
+
     record_keeper, _, _ = logging_presets.get_record_keeper("logs/%s"%(experiment_name), "tensorboard/%s"%(experiment_name))
     hooks = logging_presets.get_hook_container(record_keeper)
     dataset_dict = {"samples": val_samples_dataset, "val": val_dataset}
     model_folder = "example_saved_models/%s/"%(experiment_name)
+
 
     # Create the tester
     tester = OneShotTester(
