@@ -104,14 +104,6 @@ class OneShotTester(BaseTester):
         keyname = self.accuracies_keyname("mean_average_precision_at_r") # accuracy as keyname not working
         accuracies[keyname] = accuracy
 
-        # log config
-
-        experiment_name = get_experiment_name(cfg, extra_str="")
-        with open("config_log.txt", "w") as config_log:
-            config_log.write(experiment_name)
-            config_log.write("acccuracy " +str(accuracy))
-            config_log.write(cfg.pretty())
-
 
 class MLP(nn.Module):
     # layer_sizes[0] is the dimension of the input
