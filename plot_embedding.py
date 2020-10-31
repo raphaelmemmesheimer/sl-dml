@@ -88,5 +88,21 @@ def plot_embedding(filename, target_filename, mode="umap", legend=False, size=10
     #plt.show()
     #plt.savefig(target_filename, bbox_inches='tight')
 
+# Side helpers for paper writing
+def get_tex_colors_for_matplotlib_colors():
+     for i in zip(ntu_one_shot_classes, plt.cm.get_cmap("tab20b").colors): 
+        s = "\definecolor{%s}{rgb}{%2f, %2f, %2f}"%((i[0].replace(" ","_")).replace("’",""), i[1][0], i[1][1], i[1][2]) 
+        print(s)
+
+def get_colorized_labels_colors_for_matplotlib_colors():
+     for i in zip(ntu_one_shot_classes, plt.cm.get_cmap("tab20b").colors): 
+        s = "\\textcolor{%s}{%s},"%((i[0].replace(" ","_")).replace("’",""), i[0]) 
+        print(s)
+
+def get_colorized_labels_colors_for_matplotlib_colors_squared():
+     for i in zip(ntu_one_shot_classes, plt.cm.get_cmap("tab20b").colors): 
+        s = "%s \\textcolor{%s}{\\bullet},"%(i[0], (i[0].replace(" ","_")).replace("’","")) 
+        print(s)
+
 if __name__ == '__main__':
     fire.Fire(plot_embedding)
