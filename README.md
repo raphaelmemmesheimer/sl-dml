@@ -14,11 +14,13 @@ This repository contains the code for SL-DML, a metric learning approach for one
 ## Citation
 
 ```
-@article{memmesheimer2020signal,
-  title={Signal Level Deep Metric Learning for Multimodal One-Shot Action Recognition},
+@inproceedings{memmesheimer2021sl,
+  title={SL-DML: Signal Level Deep Metric Learning for Multimodal One-Shot Action Recognition},
   author={Memmesheimer, Raphael and Theisen, Nick and Paulus, Dietrich},
-  journal={arXiv preprint arXiv:2004.11085},
-  year={2020}
+  booktitle={2020 25th International Conference on Pattern Recognition (ICPR)},
+  pages={4573--4580},
+  year={2021},
+  organization={IEEE}
 }
 ```
 
