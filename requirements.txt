@@ -1,6 +1,6 @@
 record-keeper
 pytorch-metric-learning
-torch==1.5.0
+torch==2.2.0
 torchvision==0.6.0
 omegaconf==1.4.1
 umap-learn
